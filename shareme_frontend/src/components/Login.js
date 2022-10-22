@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { GoogleLogin } from "react-google-login";
 import { useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
+import { loadGapiInsideDOM } from "gapi-script";
 
 import shareVideo from "../assets/share.mp4";
 import logo from "../assets/logowhite.png";
@@ -10,6 +11,12 @@ const Login = () => {
   const handleResponseGoogle = (response) => {
     console.log("res: ", response);
   };
+
+  useEffect(() => {
+    (async () => {
+      await loadGapiInsideDOM();
+    })();
+  });
 
   return (
     <div className="flex flex-col justify-start items-center h-screen">
@@ -44,7 +51,6 @@ const Login = () => {
               onSuccess={handleResponseGoogle}
               onFailure={handleResponseGoogle}
               cookiePolicy={"single_host_origin"}
-              scope="email"
             />
           </div>
         </div>
