@@ -6,17 +6,33 @@ import { loadGapiInsideDOM } from "gapi-script";
 
 import shareVideo from "../assets/share.mp4";
 import logo from "../assets/logowhite.png";
+import { client } from "../client";
 
 const Login = () => {
-  const handleResponseGoogle = (response) => {
-    console.log("res: ", response);
-  };
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
       await loadGapiInsideDOM();
     })();
   });
+
+  const handleResponseGoogle = (response) => {
+    localStorage.setItem("user", JSON.stringify(response.profileObj));
+
+    const { name, googleId, imageUrl } = response.profileObj;
+
+    const doc = {
+      _id: googleId,
+      _type: "user",
+      userName: name,
+      image: imageUrl,
+    };
+
+    client.createIfNotExists(doc).then((res) => {
+      navigate("/", { replace: true });
+    });
+  };
 
   return (
     <div className="flex flex-col justify-start items-center h-screen">
