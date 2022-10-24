@@ -2,7 +2,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import Login from './components/Login';
-import Home from './containers/Home';
+import { HomePage, UserProfilePage } from './containers';
 import { DefaultLayout } from './layouts';
 
 const App = () => {
@@ -13,7 +13,15 @@ const App = () => {
         path="/"
         element={
           <DefaultLayout>
-            <Home />
+            <HomePage />
+          </DefaultLayout>
+        }
+      />
+      <Route
+        path="/user-profile/:userId"
+        element={
+          <DefaultLayout>
+            <UserProfilePage />
           </DefaultLayout>
         }
       />
