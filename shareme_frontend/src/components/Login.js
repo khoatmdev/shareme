@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
-import { GoogleLogin } from "react-google-login";
-import { useNavigate } from "react-router-dom";
-import { FcGoogle } from "react-icons/fc";
-import { loadGapiInsideDOM } from "gapi-script";
+import React, { useEffect } from 'react';
+import { GoogleLogin } from 'react-google-login';
+import { useNavigate } from 'react-router-dom';
+import { FcGoogle } from 'react-icons/fc';
+import { loadGapiInsideDOM } from 'gapi-script';
 
-import shareVideo from "../assets/share.mp4";
-import logo from "../assets/logowhite.png";
-import { client } from "../client";
+import shareVideo from '../assets/share.mp4';
+import logo from '../assets/logowhite.png';
+import { client } from '../client';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -17,20 +17,20 @@ const Login = () => {
     })();
   });
 
-  const handleResponseGoogle = (response) => {
-    localStorage.setItem("user", JSON.stringify(response.profileObj));
+  const handleResponseGoogle = response => {
+    localStorage.setItem('user', JSON.stringify(response.profileObj));
 
     const { name, googleId, imageUrl } = response.profileObj;
 
     const doc = {
       _id: googleId,
-      _type: "user",
+      _type: 'user',
       userName: name,
       image: imageUrl,
     };
 
-    client.createIfNotExists(doc).then((res) => {
-      navigate("/", { replace: true });
+    client.createIfNotExists(doc).then(() => {
+      navigate('/', { replace: true });
     });
   };
 
@@ -54,19 +54,18 @@ const Login = () => {
           <div className="shadow-2xl">
             <GoogleLogin
               clientId={process.env.REACT_APP_GOOGLE_API_TOKEN}
-              render={(props) => (
+              render={props => (
                 <button
                   type="button"
                   className="bg-white flex justify-center items-center p-2 rounded-sm cursor-pointer outline-none"
                   onClick={props.onClick}
-                  disabled={props.disabled}
-                >
+                  disabled={props.disabled}>
                   <FcGoogle className="mr-4" /> Sign In With Google
                 </button>
               )}
               onSuccess={handleResponseGoogle}
               onFailure={handleResponseGoogle}
-              cookiePolicy={"single_host_origin"}
+              cookiePolicy={'single_host_origin'}
             />
           </div>
         </div>
