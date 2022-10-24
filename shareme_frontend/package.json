@@ -27,6 +27,8 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
     "postcss": "^8.4.18",
     "prettier": "^2.7.1",
     "tailwindcss": "^3.1.8"
@@ -35,7 +37,16 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint --ext js,jsx src/ ",
+    "lint:fix": "eslint --fix --ext js,jsx src/",
+    "postinstall": "cd ../ && husky install"
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "npm run lint",
+      "npm run lint:fix"
+    ]
   },
   "eslintConfig": {
     "extends": [
